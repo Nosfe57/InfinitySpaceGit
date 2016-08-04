@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">InfinitySpace</string>
+    <string name="defaultUser">Player</string>
+    <string name="title">Infinity Space</string>
+    <string name="btn_newGame">New Game</string>
+    <string name="btn_viewScores">Scores</string>
+    <string name="music">Music volume</string>
+    <string name="effects">Effects volume</string>
+    <string name="orientationChoice">Orientation</string>
+    <string name="orientationLandscape">Landscape</string>
+    <string name="orientationPortrait">Portrait</string>
+    <string name="difficultyChoice">Difficulty</string>
+    <string name="difficultyEasy">Hello Kitty</string>
+    <string name="difficultyMedium">Normal</string>
+    <string name="difficultyHard">Balls of steel</string>
+    <string name="endGame">Game over</string>
+    <string name="enterPseudo">Please enter your pseudo</string>
+</resources>
