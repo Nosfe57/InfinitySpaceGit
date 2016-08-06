@@ -1,5 +1,6 @@
 package david.nico.shoot.infinityspace;
 
+import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,12 +27,14 @@ public abstract class Vaisseau
         sprite = vaisseauSprite;
         pointsDeVie = vaisseauPV;
 
-        sprite.post(new Runnable() {
-            @Override
-            public void run() {
-                ((AnimationDrawable) sprite.getDrawable()).start();
-            }
-        });
+        if (sprite != null) {
+            sprite.post(new Runnable() {
+                @Override
+                public void run() {
+                    ((AnimationDrawable) sprite.getDrawable()).start();
+                }
+            });
+        }
     }
 
     protected void perdrePV(int degatsSubits)
@@ -53,10 +56,8 @@ public abstract class Vaisseau
         //Code
     }
 
-    protected void tirer(Missile tir)
-    {
-        //Code
-    }
+    protected abstract void tirer(Point tailleEcran);
+
 
     public abstract void bouger(float y, int tailleFenetre);
 }

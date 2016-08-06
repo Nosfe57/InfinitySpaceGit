@@ -1,5 +1,6 @@
 package david.nico.shoot.infinityspace;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
@@ -18,6 +19,9 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by Nico on 28/07/2016.
  */
@@ -26,8 +30,8 @@ public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor sensor;
     ImageView spaceship;
-    int windowHeight;
-    int getWindowWidth;
+    ImageView imageEnnemi;
+    Point tailleEcran;
     Joueur joueur;
 
     @Override
@@ -47,12 +51,35 @@ public class GameActivity extends AppCompatActivity {
 
         //Récupère la taille de l'écran et l'enregistre dans windowHeight
         Display display = getWindowManager().getDefaultDisplay();
+<<<<<<< HEAD
         Point size = new Point();
         display.getSize(size);
         windowHeight = size.y;
         getWindowWidth = size.x;
 
         Asteroide ast = new Asteroide(this);
+=======
+        tailleEcran = new Point();
+        display.getSize(tailleEcran);
+
+        final Context context = this;
+
+        TimerTask essai = new TimerTask() {
+            @Override
+            public void run() {
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Ennemi test = new Ennemi(null, 1, 1, context, tailleEcran);
+                    }
+                });
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(essai, 500, 2000);
+
+>>>>>>> origin/master
     }
 
     public void onResume() {
@@ -73,7 +100,7 @@ public class GameActivity extends AppCompatActivity {
             //float x = event.values[0];
             float y = event.values[1];
 
-            joueur.bouger(y, windowHeight);
+            joueur.bouger(y, tailleEcran.y);
         }
     };
 }

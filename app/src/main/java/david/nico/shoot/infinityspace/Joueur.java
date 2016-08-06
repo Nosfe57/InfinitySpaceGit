@@ -1,5 +1,6 @@
 package david.nico.shoot.infinityspace;
 
+import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
 import android.widget.ImageView;
@@ -55,6 +56,12 @@ public class Joueur extends Vaisseau
         {
             //Code
         }
+    }
+
+    @Override
+    public void tirer(Point tailleEcran)
+    {
+        //Code
     }
 
     @Override
