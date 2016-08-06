@@ -51,6 +51,8 @@ public class GameActivity extends AppCompatActivity {
         display.getSize(size);
         windowHeight = size.y;
         getWindowWidth = size.x;
+
+        Asteroide ast = new Asteroide(this);
     }
 
     public void onResume() {
