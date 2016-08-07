@@ -52,9 +52,6 @@ public class GameActivity extends AppCompatActivity {
         //Récupère la taille de l'écran et l'enregistre dans windowHeight
         Display display = getWindowManager().getDefaultDisplay();
 
-
-        Asteroide ast = new Asteroide(this);
-
         tailleEcran = new Point();
         display.getSize(tailleEcran);
 
@@ -73,8 +70,8 @@ public class GameActivity extends AppCompatActivity {
         };
 
         Timer timer = new Timer();
-        timer.schedule(essai, 500, 2000);
-        
+        timer.schedule(essai, 500, 500);
+
     }
 
     public void onResume() {

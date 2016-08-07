@@ -20,7 +20,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/spaceship"
-        android:src="@drawable/spaceship_animation"
+        android:src="@drawable/player_animation"
         android:layout_marginLeft="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="false"

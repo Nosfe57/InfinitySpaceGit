@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -82,11 +84,14 @@ public class Ennemi extends Vaisseau
                     {
                         if(sprite != null)
                         {
-                            if (layoutParams.leftMargin > 100)
+                            if (layoutParams.leftMargin > 0)
                             {
                                 layoutParams.leftMargin -= 2;
                                 ((ViewGroup) sprite.getParent()).removeView(sprite);
                                 activity.addContentView(sprite, layoutParams);
+
+                                ((AnimationDrawable) sprite.getDrawable()).start();
+
                             }
                             else
                             {
@@ -101,7 +106,7 @@ public class Ennemi extends Vaisseau
             }
         };
         timerMouvement = new Timer();
-        timerMouvement.schedule(task, 500, 2);
+        timerMouvement.schedule(task, 0, 2);
 
     }
 
@@ -109,14 +114,18 @@ public class Ennemi extends Vaisseau
     {
         sprite = new ImageView(context);
 
-        layoutParams = new FrameLayout.LayoutParams(80, 80);
-        layoutParams.leftMargin = tailleEcran.x -(sprite.getWidth()+80);
+        layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftMargin = tailleEcran.x + 80;
         Random rnd = new Random();
-        layoutParams.topMargin = rnd.nextInt(201);
+        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - sprite.getHeight());
 
         activity = (Activity)context;
-        sprite.setImageResource(R.drawable.spaceship_enemy_start);
+        sprite.setImageResource(R.drawable.enemy_animation);
         activity.addContentView(sprite, layoutParams);
+
+        Log.w("nico", "hauteur ecran : " + tailleEcran.y);
+        Log.w("nico", "hauteur vaisseau : " + layoutParams.height);
+        Log.w("nico", "random : " + layoutParams.topMargin);
     }
 
 
