@@ -23,11 +23,7 @@ import java.util.TimerTask;
 public class Ennemi extends Vaisseau
 {
     private int pointsScore;
-    private Context context;
     private Point tailleEcran;
-    FrameLayout.LayoutParams layoutParams;
-    Timer timerMouvement;
-    Activity activity;
 
     //region Get_Set
     public int getPointsScore()
@@ -56,72 +52,23 @@ public class Ennemi extends Vaisseau
 
     public Ennemi(ImageView ennemiSprite, int ennemiPV, int ennemiScore, Context ennemiContext, Point ennemiTailleEcran)
     {
-        super(ennemiSprite, ennemiPV);
+        super(ennemiSprite, ennemiPV, ennemiContext);
         pointsScore = ennemiScore;
-        context = ennemiContext;
-        activity = (Activity)context;
+        activity = (Activity)ennemiContext;
         tailleEcran = ennemiTailleEcran;
         apparaitre();
         bouger();
     }
 
-    @Override
-    public void tirer(Point tailleEcran)
-    {
-        //Code
-    }
-
-    @Override
-    public void bouger()
-    {
-        TimerTask task = new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        if(sprite != null)
-                        {
-                            if (layoutParams.leftMargin > 0)
-                            {
-                                layoutParams.leftMargin -= 1;
-                                sprite.setLayoutParams(layoutParams);
-                            }
-                            else
-                            {
-                                timerMouvement.cancel();
-                                timerMouvement.purge();
-                                ((ViewGroup) sprite.getParent()).removeView(sprite);
-                                sprite = null;
-                            }
-                        }
-                    }
-                });
-            }
-        };
-        timerMouvement = new Timer();
-        timerMouvement.schedule(task, 0, 10);
-    }
-
     public void apparaitre()
     {
-        ImageView imageTemp = new ImageView(context);
-        imageTemp.setImageResource(R.drawable.enemy_1);
-        FrameLayout.LayoutParams paramTemp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        paramTemp.height = FrameLayout.LayoutParams.WRAP_CONTENT;
-        imageTemp.setLayoutParams(paramTemp);
-
-
         sprite = new ImageView(context);
         sprite.setImageResource(R.drawable.enemy_animation);
 
         layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.leftMargin = tailleEcran.x - 100;
         Random rnd = new Random();
-        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - imageTemp.getHeight());
+        layoutParams.topMargin = rnd.nextInt(tailleEcran.y);
 
         activity = (Activity)context;
         activity.addContentView(sprite, layoutParams);
@@ -136,7 +83,6 @@ public class Ennemi extends Vaisseau
 
 
         Log.w("nico", "hauteur ecran : " + tailleEcran.y);
-        Log.w("nico", "hauteur vaisseau : " + imageTemp.getHeight());
         Log.w("nico", "random : " + layoutParams.topMargin);
     }
 

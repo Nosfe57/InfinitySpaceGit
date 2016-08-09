@@ -30,7 +30,6 @@ public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor sensor;
     ImageView spaceship;
-    ImageView imageEnnemi;
     Point tailleEcran;
     Joueur joueur;
     Timer timer;
@@ -64,7 +63,8 @@ public class GameActivity extends AppCompatActivity {
                 ((Activity)context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Ennemi test = new Ennemi(null, 1, 1, context, tailleEcran);
+                        Ennemi ennemi = new Ennemi(null, 1, 1, context, tailleEcran);
+                        //ennemi.tirer(tailleEcran);
                         Asteroide asTest = new Asteroide(context, tailleEcran);
                     }
                 });
@@ -74,6 +74,20 @@ public class GameActivity extends AppCompatActivity {
         timer = new Timer();
         timer.schedule(essai, 500, 2000);
 
+        TimerTask taskTirJoueur = new TimerTask() {
+            @Override
+            public void run() {
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        joueur.tirer(tailleEcran);
+                    }
+                });
+            }
+        };
+
+        Timer timerTirJoueur = new Timer();
+        timerTirJoueur.schedule(taskTirJoueur, 500, 500);
     }
 
     public void onResume() {
@@ -95,8 +109,7 @@ public class GameActivity extends AppCompatActivity {
             //float x = event.values[0];
             float y = event.values[1];
 
-            joueur.move(y, tailleEcran.y);
-            joueur.tirer(tailleEcran);
+            joueur.bouger(y, tailleEcran.y);
         }
     };
 }

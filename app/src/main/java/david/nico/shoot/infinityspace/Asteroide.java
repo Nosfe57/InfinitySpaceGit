@@ -14,16 +14,17 @@ import java.util.Random;
  */
 public class Asteroide extends ObjetEnMouvement
 {
-    private Context context;
     private Point tailleEcran;
+    private Context context;
 
     public Asteroide(Context contextActivity, Point appTailleEcran)
     {
+        super();
         context = contextActivity;
         activity = (Activity) context;
         tailleEcran = appTailleEcran;
-        this.creationSprite();
-        this.bouger();
+        creationSprite();
+        bouger();
     }
 
     private void creationSprite()
@@ -53,7 +54,7 @@ public class Asteroide extends ObjetEnMouvement
             sprite.setImageResource(R.drawable.aestroid_1);
         }
 
-        //Paramétre de l'imageView
+        //Paramètres de l'imageView
         layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         Random positionRandom = new Random();
         int y = positionRandom.nextInt(tailleEcran.y - sprite.getHeight());

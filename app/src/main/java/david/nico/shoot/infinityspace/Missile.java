@@ -1,15 +1,20 @@
 package david.nico.shoot.infinityspace;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 /**
  * Created by USER on 03/08/2016.
  */
-public class Missile
+public class Missile extends ObjetEnMouvement
 {
-    protected ImageView sprite;
-    protected int vitesse;
     protected int degatsInfliges;
+    protected Context context;
 
     //region Get_Set
     public ImageView getSprite(){return sprite;}
@@ -25,16 +30,41 @@ public class Missile
     public Missile()
     {
         /*Il faut mettre un sprite par défaut !*/
-        sprite = null;
-        vitesse = 1;
-        degatsInfliges = 1;
+        super();
     }
 
-    public Missile(ImageView missileSprite, int missileVitesse, int missileDegatsInfliges)
+    public Missile(Vaisseau tireur, int missileVitesse, int missileDegatsInfliges, Context missileContext)
     {
-        sprite = missileSprite;
-        vitesse = missileVitesse;
+        context = missileContext;
+        sprite = new ImageView(context);
+        activity = (Activity) context;
         degatsInfliges = missileDegatsInfliges;
+        vitesse = missileVitesse;
+        if (tireur instanceof Joueur)
+        {
+            sprite.setImageResource(R.drawable.bullet);
+        }
+        else if(tireur instanceof Ennemi)
+        {
+            sprite.setImageResource(R.drawable.bullet);
+        }
+        apparaitre(tireur);
+        bouger();
+    }
+
+    private void apparaitre(Vaisseau vaisseau)
+    {
+        //param du sprite
+
+        RelativeLayout.LayoutParams paramVaisseau = (RelativeLayout.LayoutParams) vaisseau.sprite.getLayoutParams();
+
+        //sprite.setImageResource(R.drawable.bullet);
+
+        layoutParams = new FrameLayout.LayoutParams((int) (10 * Resources.getSystem().getDisplayMetrics().density), (int) (10 * Resources.getSystem().getDisplayMetrics().density));
+        layoutParams.topMargin = paramVaisseau.topMargin + (sprite.getHeight() / 2);
+        layoutParams.leftMargin = paramVaisseau.leftMargin + paramVaisseau.width;
+        Activity activity = (Activity) context;
+        activity.addContentView(sprite, layoutParams);
     }
 
     public boolean verifierColision(Joueur joueur)

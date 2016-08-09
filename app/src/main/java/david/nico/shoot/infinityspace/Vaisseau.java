@@ -1,5 +1,6 @@
 package david.nico.shoot.infinityspace;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
@@ -8,10 +9,11 @@ import android.widget.RelativeLayout;
 /**
  * Created by USER on 03/08/2016.
  */
-public abstract class Vaisseau
+public abstract class Vaisseau extends ObjetEnMouvement
 {
-    protected ImageView sprite;
     protected int pointsDeVie;
+    protected Context context;
+    protected int vitesseTir;
 
     //La classe est abstraite et ne sera jamais instanciée, donc pas besoin de Get_Set.
 
@@ -22,11 +24,11 @@ public abstract class Vaisseau
         pointsDeVie = 1;
     }
 
-    protected Vaisseau(ImageView vaisseauSprite, int vaisseauPV)
+    protected Vaisseau(ImageView vaisseauSprite, int vaisseauPV, Context vaisseauContext)
     {
         sprite = vaisseauSprite;
         pointsDeVie = vaisseauPV;
-
+        context = vaisseauContext;
         if (sprite != null) {
             sprite.post(new Runnable() {
                 @Override
@@ -37,27 +39,34 @@ public abstract class Vaisseau
         }
     }
 
-    protected void perdrePV(int degatsSubits)
-    {
+    protected void perdrePV(int degatsSubits) {
         pointsDeVie -= degatsSubits;
 
         //On vérifie si le vaisseau est mort
         if (pointsDeVie <= 0)
             detruire();
-        else
-        {
+        else {
             //Code pour faire clignoter.
         }
 
     }
 
-    protected void detruire()
-    {
+    protected void detruire() {
         //Code
     }
 
-    protected abstract void tirer(Point tailleEcran);
-
-
-    public abstract void bouger();
+    protected void tirer(Point tailleEcran)
+    {
+        if(this instanceof Joueur)
+        {
+            vitesseTir = 5;
+        }
+        else
+        {
+            vitesseTir = -1;
+        }
+        Missile tir = new Missile(this, vitesseTir, 1, context);
+    }
 }
+
+

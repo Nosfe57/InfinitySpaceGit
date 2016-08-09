@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,9 +19,10 @@ public abstract class ObjetEnMouvement
     protected FrameLayout.LayoutParams layoutParams;
     protected Timer timerMouvement;
     protected Activity activity;
+    protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
 
     //Constructeur
-    protected ObjetEnMouvement() { }
+    protected ObjetEnMouvement() { vitesse = -1;}
 
 
     public void bouger()
@@ -37,9 +39,9 @@ public abstract class ObjetEnMouvement
                     {
                         if (sprite != null)
                         {
-                            if (layoutParams.leftMargin > 0)
+                            if (layoutParams.leftMargin > 0 && layoutParams.leftMargin < 2000)
                             {
-                                layoutParams.leftMargin -= 1;
+                                layoutParams.leftMargin += vitesse;
                                 sprite.setLayoutParams(layoutParams);
                             }
                             else
@@ -56,7 +58,5 @@ public abstract class ObjetEnMouvement
         };
         timerMouvement = new Timer();
         timerMouvement.schedule(task, 0, 10);
-
-
     }
 }
