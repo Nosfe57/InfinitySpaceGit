@@ -60,8 +60,8 @@ public class Missile extends ObjetEnMouvement
 
         //sprite.setImageResource(R.drawable.bullet);
 
-        layoutParams = new FrameLayout.LayoutParams((int) (10 * Resources.getSystem().getDisplayMetrics().density), (int) (10 * Resources.getSystem().getDisplayMetrics().density));
-        layoutParams.topMargin = paramVaisseau.topMargin + (sprite.getHeight() / 2);
+        layoutParams = new FrameLayout.LayoutParams(dpToPx(10), dpToPx(10));
+        layoutParams.topMargin = paramVaisseau.topMargin + (paramVaisseau.height / 2) - dpToPx(5);
         layoutParams.leftMargin = paramVaisseau.leftMargin + paramVaisseau.width;
         Activity activity = (Activity) context;
         activity.addContentView(sprite, layoutParams);

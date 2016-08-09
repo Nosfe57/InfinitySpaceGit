@@ -65,10 +65,10 @@ public class Ennemi extends Vaisseau
         sprite = new ImageView(context);
         sprite.setImageResource(R.drawable.enemy_animation);
 
-        layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = tailleEcran.x - 100;
+        layoutParams = new FrameLayout.LayoutParams(dpToPx(40), dpToPx(40));
+        layoutParams.leftMargin = tailleEcran.x;
         Random rnd = new Random();
-        layoutParams.topMargin = rnd.nextInt(tailleEcran.y);
+        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - dpToPx(40));
 
         activity = (Activity)context;
         activity.addContentView(sprite, layoutParams);

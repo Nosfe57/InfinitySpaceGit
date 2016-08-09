@@ -1,6 +1,7 @@
 package david.nico.shoot.infinityspace;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -58,5 +59,15 @@ public abstract class ObjetEnMouvement
         };
         timerMouvement = new Timer();
         timerMouvement.schedule(task, 0, 10);
+    }
+
+    public static int dpToPx(int dp)
+    {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public static int pxToDp(int px)
+    {
+        return (int) (px / Resources.getSystem().getDisplayMetrics().density);
     }
 }

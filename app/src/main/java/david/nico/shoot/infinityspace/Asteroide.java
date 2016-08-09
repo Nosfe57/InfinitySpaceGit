@@ -55,12 +55,13 @@ public class Asteroide extends ObjetEnMouvement
         }
 
         //Paramètres de l'imageView
-        layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams = new FrameLayout.LayoutParams(dpToPx(40), dpToPx(40));
         Random positionRandom = new Random();
-        int y = positionRandom.nextInt(tailleEcran.y - sprite.getHeight());
+        int y = positionRandom.nextInt(tailleEcran.y - dpToPx(40));
         layoutParams.topMargin = y;
-        layoutParams.leftMargin = tailleEcran.x -200;
+        layoutParams.leftMargin = tailleEcran.x;
 
+        //Ajout de l'ImageView dans mon layout
         Activity activity = (Activity) context;
         activity.addContentView(sprite, layoutParams);
     }
