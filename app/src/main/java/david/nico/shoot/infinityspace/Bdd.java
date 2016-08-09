@@ -81,4 +81,11 @@ public class Bdd extends SQLiteOpenHelper
 
         return listeScores;
     }
+
+    public void clearScores()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME);
+        db.close();
+    }
 }

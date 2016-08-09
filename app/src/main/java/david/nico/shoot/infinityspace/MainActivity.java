@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     Button btnNewGame;
+    Button viewScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         btnNewGame = (Button)findViewById(R.id.btn_new_game);
         btnNewGame.setOnClickListener(mainClick);
 
-
+        viewScores = (Button)findViewById(R.id.btn_viewScores);
+        viewScores.setOnClickListener(scoresClick);
     }
 
     //event
@@ -29,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener scoresClick = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), ScoresActivity.class);
             startActivity(intent);
         }
     };

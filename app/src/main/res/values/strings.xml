@@ -15,4 +15,5 @@
     <string name="difficultyHard">Balls of steel</string>
     <string name="endGame">Game over</string>
     <string name="enterPseudo">Please enter your pseudo</string>
+    <string name="viewScores">Scores</string>
 </resources>
