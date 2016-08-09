@@ -33,25 +33,26 @@ public class GameActivity extends AppCompatActivity {
     ImageView imageEnnemi;
     Point tailleEcran;
     Joueur joueur;
+    Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
+        //Variable senseur du gyroscope
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
         //ImageView du joueur
         spaceship = (ImageView) findViewById(R.id.spaceship);
 
-        joueur = new Joueur(spaceship, 3, 2);
+        joueur = new Joueur(spaceship, 3, 2, this);
+        joueur.tirer(tailleEcran);
 
-        //Récupère la taille de l'écran et l'enregistre dans windowHeight
+        //Récupère la taille de l'écran et l'enregistre dans tailleEcran
         Display display = getWindowManager().getDefaultDisplay();
-
         tailleEcran = new Point();
         display.getSize(tailleEcran);
 
@@ -64,13 +65,14 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Ennemi test = new Ennemi(null, 1, 1, context, tailleEcran);
+                        Asteroide asTest = new Asteroide(context, tailleEcran);
                     }
                 });
             }
         };
 
-        Timer timer = new Timer();
-        timer.schedule(essai, 500, 500);
+        timer = new Timer();
+        timer.schedule(essai, 500, 2000);
 
     }
 
@@ -82,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         sensorManager.unregisterListener(gyroListener);
+
     }
 
     public SensorEventListener gyroListener = new SensorEventListener() {
@@ -92,7 +95,8 @@ public class GameActivity extends AppCompatActivity {
             //float x = event.values[0];
             float y = event.values[1];
 
-            joueur.bouger(y, tailleEcran.y);
+            joueur.move(y, tailleEcran.y);
+            joueur.tirer(tailleEcran);
         }
     };
 }

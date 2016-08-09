@@ -3,30 +3,30 @@
     android:oneshot="false">
     <item
         android:drawable="@drawable/player_1"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_2"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_3"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_4"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_4"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_5"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_6"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_7"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/player_8"
-        android:duration="50" />
+        android:duration="1" />
 
 </animation-list>

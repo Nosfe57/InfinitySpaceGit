@@ -59,9 +59,10 @@ public class Ennemi extends Vaisseau
         super(ennemiSprite, ennemiPV);
         pointsScore = ennemiScore;
         context = ennemiContext;
+        activity = (Activity)context;
         tailleEcran = ennemiTailleEcran;
-        apparaitre(tailleEcran);
-        bouger(0f, 10);
+        apparaitre();
+        bouger();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class Ennemi extends Vaisseau
     }
 
     @Override
-    public void bouger(float y, int tailleFenetre)
+    public void bouger()
     {
         TimerTask task = new TimerTask()
         {
@@ -86,12 +87,8 @@ public class Ennemi extends Vaisseau
                         {
                             if (layoutParams.leftMargin > 0)
                             {
-                                layoutParams.leftMargin -= 2;
-                                ((ViewGroup) sprite.getParent()).removeView(sprite);
-                                activity.addContentView(sprite, layoutParams);
-
-                                ((AnimationDrawable) sprite.getDrawable()).start();
-
+                                layoutParams.leftMargin -= 1;
+                                sprite.setLayoutParams(layoutParams);
                             }
                             else
                             {
@@ -106,25 +103,40 @@ public class Ennemi extends Vaisseau
             }
         };
         timerMouvement = new Timer();
-        timerMouvement.schedule(task, 0, 2);
-
+        timerMouvement.schedule(task, 0, 10);
     }
 
-    public void apparaitre(Point tailleEcran)
+    public void apparaitre()
     {
+        ImageView imageTemp = new ImageView(context);
+        imageTemp.setImageResource(R.drawable.enemy_1);
+        FrameLayout.LayoutParams paramTemp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        paramTemp.height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        imageTemp.setLayoutParams(paramTemp);
+
+
         sprite = new ImageView(context);
+        sprite.setImageResource(R.drawable.enemy_animation);
 
         layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftMargin = tailleEcran.x + 80;
+        layoutParams.leftMargin = tailleEcran.x - 100;
         Random rnd = new Random();
-        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - sprite.getHeight());
+        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - imageTemp.getHeight());
 
         activity = (Activity)context;
-        sprite.setImageResource(R.drawable.enemy_animation);
         activity.addContentView(sprite, layoutParams);
 
+        sprite.post(new Runnable() {
+            @Override
+            public void run() {
+                AnimationDrawable anim = (AnimationDrawable) sprite.getDrawable();
+                anim.start();
+            }
+        });
+
+
         Log.w("nico", "hauteur ecran : " + tailleEcran.y);
-        Log.w("nico", "hauteur vaisseau : " + layoutParams.height);
+        Log.w("nico", "hauteur vaisseau : " + imageTemp.getHeight());
         Log.w("nico", "random : " + layoutParams.topMargin);
     }
 

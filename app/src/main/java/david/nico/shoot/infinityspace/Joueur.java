@@ -1,8 +1,12 @@
 package david.nico.shoot.infinityspace;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.Image;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -13,6 +17,7 @@ import java.io.Serializable;
  */
 public class Joueur extends Vaisseau
 {
+    private Context context;
     private int nbBombes;
     private int scoreActuel;
 
@@ -43,9 +48,10 @@ public class Joueur extends Vaisseau
         scoreActuel = 0;
     }
 
-    public Joueur(ImageView joueurSprite, int joueurPV, int joueurNbBombes)
+    public Joueur(ImageView joueurSprite, int joueurPV, int joueurNbBombes, Context playerContext)
     {
         super(joueurSprite, joueurPV);
+        context = playerContext;
         nbBombes = joueurNbBombes;
         scoreActuel = 0;
     }
@@ -62,10 +68,25 @@ public class Joueur extends Vaisseau
     public void tirer(Point tailleEcran)
     {
         //Code
+        //param du sprite
+        RelativeLayout.LayoutParams positionSprite = (RelativeLayout.LayoutParams) sprite.getLayoutParams();
+
+        ImageView bullet = new ImageView(context);
+        bullet.setImageResource(R.drawable.bullet);
+
+        FrameLayout.LayoutParams bulletParams = new FrameLayout.LayoutParams((int) (10 * Resources.getSystem().getDisplayMetrics().density), (int) (10 * Resources.getSystem().getDisplayMetrics().density));
+        bulletParams.topMargin = positionSprite.topMargin + (sprite.getHeight() / 2);
+        bulletParams.leftMargin = positionSprite.leftMargin + positionSprite.width;
+        Activity activity = (Activity) context;
+        activity.addContentView(bullet, bulletParams);
     }
 
     @Override
-    public void bouger(float y, int tailleFenetre)
+    public  void bouger(){
+
+    }
+
+    public void move(float y, int tailleFenetre)
     {
         if (y != 0) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(sprite.getWidth(), sprite.getHeight());

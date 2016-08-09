@@ -59,5 +59,5 @@ public abstract class Vaisseau
     protected abstract void tirer(Point tailleEcran);
 
 
-    public abstract void bouger(float y, int tailleFenetre);
+    public abstract void bouger();
 }

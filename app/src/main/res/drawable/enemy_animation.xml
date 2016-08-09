@@ -3,26 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/enemy_1"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_2"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_3"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_4"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_5"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_6"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_7"
-        android:duration="50" />
+        android:duration="1" />
     <item
         android:drawable="@drawable/enemy_8"
-        android:duration="50" />
+        android:duration="1" />
 </animation-list>
