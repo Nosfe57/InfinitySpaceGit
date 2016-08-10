@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
-<<<<<<< HEAD
 import android.util.Log;
-=======
 import android.graphics.Rect;
->>>>>>> origin/master
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -74,26 +70,25 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
-<<<<<<< HEAD
-    public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement()
-    {
+
+    public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement() {
         RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
 
         ArrayList<ObjetEnMouvement> liste = new ArrayList<>();
 
         int childCount = globalLayout.getChildCount();
-        for (int i = 0; i < childCount; i++)
-        {
+        for (int i = 0; i < childCount; i++) {
             Object object = globalLayout.getChildAt(i);
         }
         return liste;
-=======
+    }
+
     public boolean testColision()
     {
 
 
         return false;
->>>>>>> origin/master
+
     }
 
     public static int dpToPx(int dp)

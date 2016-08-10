@@ -187,18 +187,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    /*public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement()
-    {
-        ArrayList<ObjetEnMouvement> liste = new ArrayList<>();
-
-        int childCount = globalLayout.getChildCount();
-        for (int i = 0; i < childCount; i++)
-        {
-            Object object = globalLayout.getChildAt(i);
-        }
-        return liste;
-    }*/
-
     public void onStop() {
         super.onStop();
         sensorManager.unregisterListener(gyroListener);
