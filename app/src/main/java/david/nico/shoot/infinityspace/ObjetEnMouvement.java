@@ -1,16 +1,22 @@
 package david.nico.shoot.infinityspace;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.util.Log;
 import android.graphics.Rect;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+<<<<<<< HEAD
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+import java.util.ArrayList;
+>>>>>>> origin/master
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,7 +35,10 @@ public abstract class ObjetEnMouvement
     //protected static ArrayList<Ennemi> listeEnemi = new ArrayList<>();
 
     //Constructeur
-    protected ObjetEnMouvement() { vitesse = -1;}
+    protected ObjetEnMouvement()
+    {
+        vitesse = -1;
+    }
 
 
     public void bouger()
@@ -85,6 +94,7 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
+<<<<<<< HEAD
     public void collisionMissileJoueurEnemi()
     {
 
@@ -98,6 +108,27 @@ public abstract class ObjetEnMouvement
                 }
             }
         */
+=======
+
+    public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement() {
+        RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
+
+        ArrayList<ObjetEnMouvement> liste = new ArrayList<>();
+
+        int childCount = globalLayout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            Object object = globalLayout.getChildAt(i);
+        }
+        return liste;
+    }
+
+    public boolean testColision()
+    {
+
+
+        return false;
+
+>>>>>>> origin/master
     }
 
     public static int dpToPx(int dp)
@@ -108,5 +139,17 @@ public abstract class ObjetEnMouvement
     public static int pxToDp(int px)
     {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public boolean verifierCollision(Object obj)
+    {
+
+
+        return false;
+    }
+
+    public void finalize()
+    {
+        Log.w("david", "objet détruit");
     }
 }

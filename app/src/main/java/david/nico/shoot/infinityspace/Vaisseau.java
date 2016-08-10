@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -31,6 +32,7 @@ public abstract class Vaisseau extends ObjetEnMouvement
 
     protected Vaisseau(ImageView vaisseauSprite, int vaisseauPV, Context vaisseauContext)
     {
+        super();
         sprite = vaisseauSprite;
         pointsDeVie = vaisseauPV;
         context = vaisseauContext;
@@ -95,8 +97,11 @@ public abstract class Vaisseau extends ObjetEnMouvement
             };
             tire = new Timer();
             tire.schedule(taskTirJoueur, 500, cadenceDeTir);
+    }
 
-
+    public void finalize()
+    {
+        Log.w("david", "objet détruit");
     }
 }
 

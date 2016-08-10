@@ -77,6 +77,8 @@ public class Missile extends ObjetEnMouvement
         if(vaisseau instanceof Ennemi)
             layoutParams.leftMargin = paramVaisseau.leftMargin;
         activity.addContentView(sprite, layoutParams);
+<<<<<<< HEAD
+=======
 
         hitBox = new Rect(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.leftMargin + layoutParams.width, layoutParams.topMargin + layoutParams.height);
 
@@ -85,5 +87,6 @@ public class Missile extends ObjetEnMouvement
     public void detruire()
     {
         //Code
+>>>>>>> origin/master
     }
 }

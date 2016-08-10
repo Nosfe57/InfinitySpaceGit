@@ -16,4 +16,5 @@
     <string name="endGame">Game over</string>
     <string name="enterPseudo">Please enter your pseudo</string>
     <string name="viewScores">Scores</string>
+    <string name="scoreBarre">Score : %1$s</string>
 </resources>

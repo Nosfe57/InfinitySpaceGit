@@ -46,7 +46,6 @@ public class Ennemi extends Vaisseau
     {
         super();
         pointsScore = 1;
-
         //ImageView test = new ImageView();
     }
 
