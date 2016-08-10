@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +26,7 @@ public abstract class ObjetEnMouvement
     protected Point tailleEcran;
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
     protected Rect hitBox;
+    //protected static ArrayList<Ennemi> listeEnemi = new ArrayList<>();
 
     //Constructeur
     protected ObjetEnMouvement() { vitesse = -1;}
@@ -31,6 +34,8 @@ public abstract class ObjetEnMouvement
 
     public void bouger()
     {
+        final ObjetEnMouvement objet = this;
+
         TimerTask task = new TimerTask()
         {
             @Override
@@ -48,6 +53,14 @@ public abstract class ObjetEnMouvement
                                 layoutParams.leftMargin += vitesse;
                                 sprite.setLayoutParams(layoutParams);
                                 hitBox.offsetTo(layoutParams.leftMargin, layoutParams.topMargin);
+
+                                if (objet instanceof Missile)
+                                {
+                                    if (((Missile) objet).typeVaisseau)
+                                    {
+                                        objet.collisionMissileJoueurEnemi();
+                                    }
+                                }
                             }
                             else
                             {
@@ -55,6 +68,13 @@ public abstract class ObjetEnMouvement
                                 timerMouvement.purge();
                                 ((ViewGroup) sprite.getParent()).removeView(sprite);
                                 sprite = null;
+
+                                /*
+                                if (objet instanceof Ennemi)
+                                {
+                                    listeEnemi.remove(objet);
+                                }
+                                */
                             }
                         }
                     }
@@ -65,11 +85,19 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
-    public boolean testColision()
+    public void collisionMissileJoueurEnemi()
     {
 
-
-        return false;
+        /*
+            for (Ennemi enemi: listeEnemi) {
+                if (this.hitBox.intersect(enemi.hitBox))
+                {
+                    this.sprite = null;
+                    enemi.sprite = null;
+                    listeEnemi.remove(enemi);
+                }
+            }
+        */
     }
 
     public static int dpToPx(int dp)

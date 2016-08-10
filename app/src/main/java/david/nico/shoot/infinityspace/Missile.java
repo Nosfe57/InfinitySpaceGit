@@ -18,6 +18,8 @@ public class Missile extends ObjetEnMouvement
     protected Context context;
     private Vaisseau vaisseau;
 
+    public boolean typeVaisseau; //true pour le vaisseau joueur et false pour le vaisseau enemi
+
     //region Get_Set
     public ImageView getSprite(){return sprite;}
     public void setSprite(ImageView nouveauSprite){sprite = nouveauSprite;}
@@ -54,10 +56,12 @@ public class Missile extends ObjetEnMouvement
         sprite = new ImageView(context);
         if (vaisseau instanceof Joueur)
         {
+            typeVaisseau = true;
             sprite.setImageResource(R.drawable.bullet);
         }
         else if(vaisseau instanceof Ennemi)
         {
+            typeVaisseau = false;
             sprite.setImageResource(R.drawable.bullet_red);
         }
 

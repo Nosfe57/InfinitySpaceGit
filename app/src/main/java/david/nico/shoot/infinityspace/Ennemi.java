@@ -58,6 +58,8 @@ public class Ennemi extends Vaisseau
         tailleEcran = ennemiTailleEcran;
         apparaitre();
         bouger();
+
+
     }
 
     public void apparaitre()
