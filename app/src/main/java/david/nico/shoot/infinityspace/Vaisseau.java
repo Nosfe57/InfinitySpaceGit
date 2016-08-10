@@ -18,6 +18,7 @@ public abstract class Vaisseau extends ObjetEnMouvement
     protected int pointsDeVie;
     protected Context context;
     protected int vitesseTir;
+    Timer tire;
 
     //La classe est abstraite et ne sera jamais instanciée, donc pas besoin de Get_Set.
 
@@ -61,34 +62,41 @@ public abstract class Vaisseau extends ObjetEnMouvement
 
     protected void tirer(final Point tailleEcran)
     {
-        final Vaisseau vaisseau = this;
-        int cadenceDeTir;
-        if(this instanceof Joueur)
-        {
-            vitesseTir = 5;
-            cadenceDeTir = 500;
-
-        }
-        else
-        {
-            vitesseTir = -5;
-            cadenceDeTir = 2000;
-        }
-
-        TimerTask taskTirJoueur = new TimerTask() {
-            @Override
-            public void run() {
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                       // this.tirer(tailleEcran);
-                        new Missile(vaisseau, vitesseTir, 1, context, tailleEcran);
-                    }
-                });
+            final Vaisseau vaisseau = this;
+            int cadenceDeTir;
+            if (this instanceof Joueur) {
+                vitesseTir = 5;
+                cadenceDeTir = 500;
+            } else {
+                vitesseTir = -5;
+                cadenceDeTir = 2000;
             }
-        };
-        Timer tire = new Timer();
-        tire.schedule(taskTirJoueur, 500, cadenceDeTir);
+
+            TimerTask taskTirJoueur = new TimerTask() {
+                @Override
+                public void run()
+                {
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            if (sprite != null)
+                            {
+                                new Missile(vaisseau, vitesseTir, 1, context, tailleEcran);
+                            }
+                            else
+                            {
+                                tire.cancel();
+                                tire.purge();
+                            }
+                        }
+                    });
+                }
+            };
+            tire = new Timer();
+            tire.schedule(taskTirJoueur, 500, cadenceDeTir);
+
+
     }
 }
 

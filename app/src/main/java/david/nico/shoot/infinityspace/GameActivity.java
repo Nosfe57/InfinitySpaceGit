@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +21,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,12 +38,15 @@ public class GameActivity extends AppCompatActivity {
     Joueur joueur;
     Timer timer;
     Timer timerAsteroide;
+    RelativeLayout globalLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
+
+        globalLayout = (RelativeLayout)findViewById(R.id.globalLayout);
 
         //Variable senseur du gyroscope
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -52,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
         display.getSize(tailleEcran);
 
         joueur = new Joueur(null, 3, 2, this, tailleEcran);
-joueur.tirer(tailleEcran);
+        joueur.tirer(tailleEcran);
         final Context context = this;
 
         //Apparation des enemis
@@ -86,6 +92,38 @@ joueur.tirer(tailleEcran);
         timerAsteroide = new Timer();
         timerAsteroide.schedule(taskAsteroide, 1000, 4000);
 
+        TimerTask vidage = new TimerTask() {
+            @Override
+            public void run() {
+                deleteObjects();
+            }
+        };
+        Timer nettoyage = new Timer();
+        nettoyage.schedule(vidage, 0, 2000);
+    }
+
+    public void deleteObjects()
+    {
+        ArrayList<Object> liste = new ArrayList<>();
+
+        int childCount = globalLayout.getChildCount();
+        for (int i = 0; i < childCount; i++)
+        {
+            Object object = globalLayout.getChildAt(i);
+            liste.add(object);
+        }
+
+        for (Object obj : liste)
+        {
+            if(obj instanceof ObjetEnMouvement)
+            {
+                if (((ObjetEnMouvement)obj).sprite == null)
+                {
+                    obj = null;
+                }
+            }
+        }
+        System.gc();
     }
 
     public void onResume() {

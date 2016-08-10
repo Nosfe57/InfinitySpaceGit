@@ -41,7 +41,7 @@ public abstract class ObjetEnMouvement
                     {
                         if (sprite != null)
                         {
-                            if (layoutParams.leftMargin > 0 && layoutParams.leftMargin < 1000)
+                            if (layoutParams.leftMargin > 0 && layoutParams.leftMargin < 2000)
                             {
                                 layoutParams.leftMargin += vitesse;
                                 sprite.setLayoutParams(layoutParams);
