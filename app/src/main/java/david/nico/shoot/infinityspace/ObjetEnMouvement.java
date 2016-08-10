@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+import android.graphics.Rect;
+>>>>>>> origin/master
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,6 +29,7 @@ public abstract class ObjetEnMouvement
     protected Activity activity;
     protected Point tailleEcran;
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
+    protected Rect hitBox;
 
     //Constructeur
     protected ObjetEnMouvement()
@@ -51,6 +56,7 @@ public abstract class ObjetEnMouvement
                             {
                                 layoutParams.leftMargin += vitesse;
                                 sprite.setLayoutParams(layoutParams);
+                                hitBox.offsetTo(layoutParams.leftMargin, layoutParams.topMargin);
                             }
                             else
                             {
@@ -68,6 +74,7 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
+<<<<<<< HEAD
     public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement()
     {
         RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
@@ -80,6 +87,13 @@ public abstract class ObjetEnMouvement
             Object object = globalLayout.getChildAt(i);
         }
         return liste;
+=======
+    public boolean testColision()
+    {
+
+
+        return false;
+>>>>>>> origin/master
     }
 
     public static int dpToPx(int dp)

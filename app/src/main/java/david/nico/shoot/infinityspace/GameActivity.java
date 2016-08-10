@@ -78,6 +78,7 @@ public class GameActivity extends AppCompatActivity {
 
         joueur = new Joueur(null, 3, 2, this, tailleEcran);
         joueur.tirer(tailleEcran);
+
         final Context context = this;
 
         //Apparation des enemis

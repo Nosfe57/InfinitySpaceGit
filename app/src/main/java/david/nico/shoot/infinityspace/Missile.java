@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -49,6 +50,7 @@ public class Missile extends ObjetEnMouvement
 
     private void apparaitre(Vaisseau vaisseau)
     {
+        //ImageView de l'objet
         sprite = new ImageView(context);
         if (vaisseau instanceof Joueur)
         {
@@ -58,6 +60,7 @@ public class Missile extends ObjetEnMouvement
         {
             sprite.setImageResource(R.drawable.bullet_red);
         }
+
         //Parametre du vaisseau qui tir
         FrameLayout.LayoutParams paramVaisseau = (FrameLayout.LayoutParams) vaisseau.sprite.getLayoutParams();
 
@@ -70,5 +73,16 @@ public class Missile extends ObjetEnMouvement
         if(vaisseau instanceof Ennemi)
             layoutParams.leftMargin = paramVaisseau.leftMargin;
         activity.addContentView(sprite, layoutParams);
+<<<<<<< HEAD
+=======
+
+        hitBox = new Rect(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.leftMargin + layoutParams.width, layoutParams.topMargin + layoutParams.height);
+
+    }
+
+    public void detruire()
+    {
+        //Code
+>>>>>>> origin/master
     }
 }
