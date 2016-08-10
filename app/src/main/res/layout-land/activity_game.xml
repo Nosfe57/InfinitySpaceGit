@@ -16,15 +16,5 @@
         android:longClickable="false"
         android:scaleType="fitXY" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spaceship"
-        android:src="@drawable/player_animation"
-        android:layout_marginLeft="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="false"
-        android:layout_marginTop="150dp" />
-
 
 </RelativeLayout>

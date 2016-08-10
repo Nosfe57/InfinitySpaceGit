@@ -15,6 +15,7 @@ public class Missile extends ObjetEnMouvement
 {
     protected int degatsInfliges;
     protected Context context;
+    private Vaisseau vaisseau;
 
     //region Get_Set
     public ImageView getSprite(){return sprite;}
@@ -33,37 +34,41 @@ public class Missile extends ObjetEnMouvement
         super();
     }
 
-    public Missile(Vaisseau tireur, int missileVitesse, int missileDegatsInfliges, Context missileContext)
+    public Missile(Vaisseau tireur, int missileVitesse, int missileDegatsInfliges, Context missileContext, Point missileTailleEcran)
     {
         context = missileContext;
-        sprite = new ImageView(context);
         activity = (Activity) context;
+        vaisseau = tireur;
         degatsInfliges = missileDegatsInfliges;
         vitesse = missileVitesse;
-        if (tireur instanceof Joueur)
-        {
-            sprite.setImageResource(R.drawable.bullet);
-        }
-        else if(tireur instanceof Ennemi)
-        {
-            sprite.setImageResource(R.drawable.bullet);
-        }
+        tailleEcran = missileTailleEcran;
+
         apparaitre(tireur);
         bouger();
     }
 
     private void apparaitre(Vaisseau vaisseau)
     {
-        //param du sprite
+        sprite = new ImageView(context);
+        if (vaisseau instanceof Joueur)
+        {
+            sprite.setImageResource(R.drawable.bullet);
+        }
+        else if(vaisseau instanceof Ennemi)
+        {
+            sprite.setImageResource(R.drawable.bullet_red);
+        }
+        //Parametre du vaisseau qui tir
+        FrameLayout.LayoutParams paramVaisseau = (FrameLayout.LayoutParams) vaisseau.sprite.getLayoutParams();
 
-        RelativeLayout.LayoutParams paramVaisseau = (RelativeLayout.LayoutParams) vaisseau.sprite.getLayoutParams();
-
-        //sprite.setImageResource(R.drawable.bullet);
-
+        //parametre du missile
         layoutParams = new FrameLayout.LayoutParams(dpToPx(10), dpToPx(10));
         layoutParams.topMargin = paramVaisseau.topMargin + (paramVaisseau.height / 2) - dpToPx(5);
-        layoutParams.leftMargin = paramVaisseau.leftMargin + paramVaisseau.width;
+        if (vaisseau instanceof Joueur)
+            layoutParams.leftMargin = paramVaisseau.leftMargin + paramVaisseau.width;
         Activity activity = (Activity) context;
+        if(vaisseau instanceof Ennemi)
+            layoutParams.leftMargin = paramVaisseau.leftMargin;
         activity.addContentView(sprite, layoutParams);
     }
 

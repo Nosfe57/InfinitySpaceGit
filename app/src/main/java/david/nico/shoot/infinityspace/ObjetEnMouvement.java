@@ -20,6 +20,7 @@ public abstract class ObjetEnMouvement
     protected FrameLayout.LayoutParams layoutParams;
     protected Timer timerMouvement;
     protected Activity activity;
+    protected Point tailleEcran;
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
 
     //Constructeur

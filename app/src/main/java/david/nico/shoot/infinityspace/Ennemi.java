@@ -23,7 +23,6 @@ import java.util.TimerTask;
 public class Ennemi extends Vaisseau
 {
     private int pointsScore;
-    private Point tailleEcran;
 
     //region Get_Set
     public int getPointsScore()
@@ -80,10 +79,6 @@ public class Ennemi extends Vaisseau
                 anim.start();
             }
         });
-
-
-        Log.w("nico", "hauteur ecran : " + tailleEcran.y);
-        Log.w("nico", "random : " + layoutParams.topMargin);
     }
 
 

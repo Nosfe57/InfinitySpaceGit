@@ -1,10 +1,14 @@
 package david.nico.shoot.infinityspace;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by USER on 03/08/2016.
@@ -55,17 +59,36 @@ public abstract class Vaisseau extends ObjetEnMouvement
         //Code
     }
 
-    protected void tirer(Point tailleEcran)
+    protected void tirer(final Point tailleEcran)
     {
+        final Vaisseau vaisseau = this;
+        int cadenceDeTir;
         if(this instanceof Joueur)
         {
             vitesseTir = 5;
+            cadenceDeTir = 500;
+
         }
         else
         {
-            vitesseTir = -1;
+            vitesseTir = -5;
+            cadenceDeTir = 2000;
         }
-        Missile tir = new Missile(this, vitesseTir, 1, context);
+
+        TimerTask taskTirJoueur = new TimerTask() {
+            @Override
+            public void run() {
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       // this.tirer(tailleEcran);
+                        new Missile(vaisseau, vitesseTir, 1, context, tailleEcran);
+                    }
+                });
+            }
+        };
+        Timer tire = new Timer();
+        tire.schedule(taskTirJoueur, 500, cadenceDeTir);
     }
 }
 

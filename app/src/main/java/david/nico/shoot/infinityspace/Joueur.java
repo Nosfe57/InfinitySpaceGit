@@ -1,6 +1,10 @@
 package david.nico.shoot.infinityspace;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -39,11 +43,14 @@ public class Joueur extends Vaisseau
         scoreActuel = 0;
     }
 
-    public Joueur(ImageView joueurSprite, int joueurPV, int joueurNbBombes, Context playerContext)
+    public Joueur(ImageView joueurSprite, int joueurPV, int joueurNbBombes, Context playerContext, Point joueurTailleEcran)
     {
         super(joueurSprite, joueurPV, playerContext);
         nbBombes = joueurNbBombes;
         scoreActuel = 0;
+        tailleEcran = joueurTailleEcran;
+
+        apparaitre();
     }
 
     public void utiliserBombe()
@@ -54,11 +61,30 @@ public class Joueur extends Vaisseau
         }
     }
 
+    public void apparaitre()
+    {
+        sprite = new ImageView(context);
+        sprite.setImageResource(R.drawable.player_animation);
+
+        layoutParams = new FrameLayout.LayoutParams(dpToPx(40), dpToPx(40));
+        layoutParams.topMargin = tailleEcran.y / 2 - dpToPx(20);
+
+        activity = (Activity)context;
+        activity.addContentView(sprite, layoutParams);
+
+        sprite.post(new Runnable() {
+            @Override
+            public void run() {
+                AnimationDrawable anim = (AnimationDrawable) sprite.getDrawable();
+                anim.start();
+            }
+        });
+    }
 
     public void bouger(float y, int tailleFenetre)
     {
         if (y != 0) {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(sprite.getWidth(), sprite.getHeight());
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(sprite.getWidth(), sprite.getHeight());
             params.topMargin = sprite.getTop() + (int) (y * -90.0f);
             if(params.topMargin < 0)
                 params.topMargin = 0;

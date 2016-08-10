@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -33,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     Point tailleEcran;
     Joueur joueur;
     Timer timer;
+    Timer timerAsteroide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +46,16 @@ public class GameActivity extends AppCompatActivity {
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
-        //ImageView du joueur
-        spaceship = (ImageView) findViewById(R.id.spaceship);
-
-        joueur = new Joueur(spaceship, 3, 2, this);
-        joueur.tirer(tailleEcran);
-
-        //Récupère la taille de l'écran et l'enregistre dans tailleEcran
+        //Récupère la taille de l'écran
         Display display = getWindowManager().getDefaultDisplay();
         tailleEcran = new Point();
         display.getSize(tailleEcran);
 
+        joueur = new Joueur(null, 3, 2, this, tailleEcran);
+joueur.tirer(tailleEcran);
         final Context context = this;
 
+        //Apparation des enemis
         TimerTask essai = new TimerTask() {
             @Override
             public void run() {
@@ -64,30 +63,29 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Ennemi ennemi = new Ennemi(null, 1, 1, context, tailleEcran);
-                        //ennemi.tirer(tailleEcran);
-                        Asteroide asTest = new Asteroide(context, tailleEcran);
+                        ennemi.tirer(tailleEcran);
                     }
                 });
             }
         };
-
         timer = new Timer();
         timer.schedule(essai, 500, 2000);
 
-        TimerTask taskTirJoueur = new TimerTask() {
+        //Apparition des astéroides
+        TimerTask taskAsteroide = new TimerTask() {
             @Override
             public void run() {
                 ((Activity)context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        joueur.tirer(tailleEcran);
+                        Asteroide asteroide = new Asteroide(context, tailleEcran);
                     }
                 });
             }
         };
+        timerAsteroide = new Timer();
+        timerAsteroide.schedule(taskAsteroide, 1000, 4000);
 
-        Timer timerTirJoueur = new Timer();
-        timerTirJoueur.schedule(taskTirJoueur, 500, 500);
     }
 
     public void onResume() {
