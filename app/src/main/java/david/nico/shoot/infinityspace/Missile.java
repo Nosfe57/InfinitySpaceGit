@@ -71,21 +71,4 @@ public class Missile extends ObjetEnMouvement
             layoutParams.leftMargin = paramVaisseau.leftMargin;
         activity.addContentView(sprite, layoutParams);
     }
-
-    public boolean verifierColision(Joueur joueur)
-    {
-        //Code
-        return false;
-    }
-
-    public boolean verifierColision(Ennemi ennemi)
-    {
-        //Code
-        return false;
-    }
-
-    public void detruire()
-    {
-        //Code
-    }
 }

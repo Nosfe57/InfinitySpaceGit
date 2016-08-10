@@ -1,13 +1,16 @@
 package david.nico.shoot.infinityspace;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,7 +27,10 @@ public abstract class ObjetEnMouvement
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
 
     //Constructeur
-    protected ObjetEnMouvement() { vitesse = -1;}
+    protected ObjetEnMouvement()
+    {
+        vitesse = -1;
+    }
 
 
     public void bouger()
@@ -62,6 +68,20 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
+    public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement()
+    {
+        RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
+
+        ArrayList<ObjetEnMouvement> liste = new ArrayList<>();
+
+        int childCount = globalLayout.getChildCount();
+        for (int i = 0; i < childCount; i++)
+        {
+            Object object = globalLayout.getChildAt(i);
+        }
+        return liste;
+    }
+
     public static int dpToPx(int dp)
     {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
@@ -70,5 +90,17 @@ public abstract class ObjetEnMouvement
     public static int pxToDp(int px)
     {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public boolean verifierCollision(Object obj)
+    {
+
+
+        return false;
+    }
+
+    public void finalize()
+    {
+        Log.w("david", "objet détruit");
     }
 }
