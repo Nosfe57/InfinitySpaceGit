@@ -3,6 +3,7 @@ package david.nico.shoot.infinityspace;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -60,6 +61,8 @@ public class Asteroide extends ObjetEnMouvement
         int y = positionRandom.nextInt(tailleEcran.y - dpToPx(40));
         layoutParams.topMargin = y;
         layoutParams.leftMargin = tailleEcran.x;
+
+        hitBox = new Rect(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.leftMargin + layoutParams.width, layoutParams.topMargin + layoutParams.height);
 
         //Ajout de l'ImageView dans mon layout
         Activity activity = (Activity) context;

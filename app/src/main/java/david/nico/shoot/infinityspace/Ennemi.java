@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -71,6 +72,8 @@ public class Ennemi extends Vaisseau
 
         activity = (Activity)context;
         activity.addContentView(sprite, layoutParams);
+
+        hitBox = new Rect(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.leftMargin + layoutParams.width, layoutParams.topMargin + layoutParams.height);
 
         sprite.post(new Runnable() {
             @Override

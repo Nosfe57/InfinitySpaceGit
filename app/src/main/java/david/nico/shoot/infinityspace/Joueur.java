@@ -3,7 +3,9 @@ package david.nico.shoot.infinityspace;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -68,9 +70,12 @@ public class Joueur extends Vaisseau
 
         layoutParams = new FrameLayout.LayoutParams(dpToPx(40), dpToPx(40));
         layoutParams.topMargin = tailleEcran.y / 2 - dpToPx(20);
+        layoutParams.leftMargin = dpToPx(40);
 
         activity = (Activity)context;
         activity.addContentView(sprite, layoutParams);
+
+        hitBox = new Rect(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.leftMargin + layoutParams.width, layoutParams.topMargin + layoutParams.height);
 
         sprite.post(new Runnable() {
             @Override
@@ -92,6 +97,8 @@ public class Joueur extends Vaisseau
                 params.topMargin = (tailleFenetre - sprite.getHeight());
             params.leftMargin = sprite.getLeft();
             sprite.setLayoutParams(params);
+            hitBox.offsetTo(params.leftMargin, params.topMargin);
+
         }
         /*Log.w("nico", "after : " + sprite.getTop());
         if ( (int) y >0 || (int) y < 0) {

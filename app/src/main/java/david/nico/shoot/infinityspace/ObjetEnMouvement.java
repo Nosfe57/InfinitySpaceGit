@@ -3,6 +3,7 @@ package david.nico.shoot.infinityspace;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ public abstract class ObjetEnMouvement
     protected Activity activity;
     protected Point tailleEcran;
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
+    protected Rect hitBox;
 
     //Constructeur
     protected ObjetEnMouvement() { vitesse = -1;}
@@ -45,6 +47,7 @@ public abstract class ObjetEnMouvement
                             {
                                 layoutParams.leftMargin += vitesse;
                                 sprite.setLayoutParams(layoutParams);
+                                hitBox.offsetTo(layoutParams.leftMargin, layoutParams.topMargin);
                             }
                             else
                             {
@@ -60,6 +63,13 @@ public abstract class ObjetEnMouvement
         };
         timerMouvement = new Timer();
         timerMouvement.schedule(task, 0, 10);
+    }
+
+    public boolean testColision()
+    {
+
+
+        return false;
     }
 
     public static int dpToPx(int dp)
