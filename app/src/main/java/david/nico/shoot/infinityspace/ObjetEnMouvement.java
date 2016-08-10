@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-<<<<<<< HEAD
+
 
 import java.util.ArrayList;
 import java.util.List;
-=======
+
 import java.util.ArrayList;
->>>>>>> origin/master
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -94,9 +94,8 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
-<<<<<<< HEAD
-    public void collisionMissileJoueurEnemi()
-    {
+
+    public void collisionMissileJoueurEnemi() {
 
         /*
             for (Ennemi enemi: listeEnemi) {
@@ -108,7 +107,7 @@ public abstract class ObjetEnMouvement
                 }
             }
         */
-=======
+    }
 
     public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement() {
         RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
@@ -128,7 +127,7 @@ public abstract class ObjetEnMouvement
 
         return false;
 
->>>>>>> origin/master
+
     }
 
     public static int dpToPx(int dp)
