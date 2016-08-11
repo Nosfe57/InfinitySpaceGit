@@ -141,7 +141,6 @@ public class GameActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         sensorManager.unregisterListener(gyroListener);
-
     }
 
     public SensorEventListener gyroListener = new SensorEventListener() {

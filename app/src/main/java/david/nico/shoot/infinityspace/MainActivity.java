@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
+                /*Intent intent = new Intent(MainActivity.this, GameOver.class);
+                intent.putExtra("score", 50);
+                startActivity(intent);*/
             }
         });
 
