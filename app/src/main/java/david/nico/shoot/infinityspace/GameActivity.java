@@ -66,9 +66,7 @@ public class GameActivity extends AppCompatActivity {
         tailleEcran = new Point();
         display.getSize(tailleEcran);
 
-        Joueur.pointsDeVie = 1;
-        joueur = new Joueur(null, 2, this, tailleEcran);
-        joueur.tirer(tailleEcran);
+
 
         affichageScoreActuel.setText(getString(R.string.scoreBarre, String.valueOf(0)));
     }
@@ -101,6 +99,18 @@ public class GameActivity extends AppCompatActivity {
         super.onResume();
         sensorManager.registerListener(gyroListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         final Context context = this;
+
+        //on nullifie tous les objets pour eviter les bugs dans la new game
+        for(ObjetEnMouvement objet : ObjetEnMouvement.listeObjetEnMouvement)
+        {
+            if(!(objet instanceof Joueur))
+                objet = null;
+        }
+        ObjetEnMouvement.listeObjetEnMouvement.clear();
+
+        Joueur.pointsDeVie = 1;
+        joueur = new Joueur(null, 2, this, tailleEcran);
+        joueur.tirer(tailleEcran);
 
         //Apparation des enemis
         taskEnnemi = new TimerTask() {

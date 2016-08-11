@@ -64,7 +64,7 @@ public abstract class ObjetEnMouvement
                     {
                         if (sprite != null && hitBox != null)
                         {
-                            if (layoutParams.leftMargin > 0 && layoutParams.leftMargin < 2000)
+                            if (layoutParams.leftMargin > -200 && layoutParams.leftMargin < 2000)
                             {
                                 layoutParams.leftMargin += vitesse;
                                 sprite.setLayoutParams(layoutParams);
@@ -264,6 +264,9 @@ public abstract class ObjetEnMouvement
             activity.startActivity(intent2);
 
             GameActivity.scoreActuel = 0;
+            Joueur.pointsDeVie = 1;
+
+
         }
     }
 
