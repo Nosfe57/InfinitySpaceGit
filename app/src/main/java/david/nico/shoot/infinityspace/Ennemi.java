@@ -25,6 +25,8 @@ public class Ennemi extends Vaisseau
 {
     private int pointsScore;
 
+    AnimationDrawable anim;
+
     //region Get_Set
     public int getPointsScore()
     {
@@ -75,14 +77,14 @@ public class Ennemi extends Vaisseau
         activity.addContentView(sprite, layoutParams);
 
         hitBox = new Rect(layoutParams.leftMargin, layoutParams.topMargin, layoutParams.leftMargin + layoutParams.width, layoutParams.topMargin + layoutParams.height);
-
+        anim = (AnimationDrawable) sprite.getDrawable();
         sprite.post(new Runnable() {
             @Override
             public void run() {
-                AnimationDrawable anim = (AnimationDrawable) sprite.getDrawable();
                 anim.start();
             }
         });
+
     }
 
 

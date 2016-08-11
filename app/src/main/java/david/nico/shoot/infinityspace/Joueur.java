@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 public class Joueur extends Vaisseau
 {
     private int nbBombes;
-    private int scoreActuel;
+    private static int scoreActuel;
 
     //region Get_Set
     public int getNbBombes()
@@ -32,9 +32,10 @@ public class Joueur extends Vaisseau
     {
         return scoreActuel;
     }
-    public void setScore(int modifScore)
+    public static void setScore(int modifScore)
     {
         scoreActuel += modifScore;
+        
     }
     //endregion
 

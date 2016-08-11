@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.Log;
 import android.graphics.Rect;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,18 +26,21 @@ import java.util.TimerTask;
  */
 public abstract class ObjetEnMouvement
 {
+
     protected ImageView sprite;
     protected FrameLayout.LayoutParams layoutParams;
     protected Timer timerMouvement;
-    protected Activity activity;
+     Activity activity;
     protected Point tailleEcran;
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
     protected Rect hitBox;
-    //protected static ArrayList<Ennemi> listeEnemi = new ArrayList<>();
+    protected static ArrayList<ObjetEnMouvement> listeObjetEnMouvement = new ArrayList<>();
 
     //Constructeur
     protected ObjetEnMouvement()
+
     {
+        listeObjetEnMouvement.add(this);
         vitesse = -1;
     }
 
@@ -44,6 +48,7 @@ public abstract class ObjetEnMouvement
     public void bouger()
     {
         final ObjetEnMouvement objet = this;
+
 
         TimerTask task = new TimerTask()
         {
@@ -55,7 +60,7 @@ public abstract class ObjetEnMouvement
                     @Override
                     public void run()
                     {
-                        if (sprite != null)
+                        if (sprite != null && hitBox != null)
                         {
                             if (layoutParams.leftMargin > 0 && layoutParams.leftMargin < 2000)
                             {
@@ -77,13 +82,7 @@ public abstract class ObjetEnMouvement
                                 timerMouvement.purge();
                                 ((ViewGroup) sprite.getParent()).removeView(sprite);
                                 sprite = null;
-
-                                /*
-                                if (objet instanceof Ennemi)
-                                {
-                                    listeEnemi.remove(objet);
-                                }
-                                */
+                                listeObjetEnMouvement.remove(objet);
                             }
                         }
                     }
@@ -95,29 +94,63 @@ public abstract class ObjetEnMouvement
     }
 
 
-    public void collisionMissileJoueurEnemi() {
-
-        /*
-            for (Ennemi enemi: listeEnemi) {
-                if (this.hitBox.intersect(enemi.hitBox))
+    public void collisionMissileJoueurEnemi()
+    {
+        ArrayList<ObjetEnMouvement> liste = getListeObjetsEnMouvement();
+        for (ObjetEnMouvement object : liste)
+        {
+            if (object instanceof Ennemi)
                 {
-                    this.sprite = null;
-                    enemi.sprite = null;
-                    listeEnemi.remove(enemi);
+                if (this.hitBox != null && ((Ennemi) object).hitBox != null && this.sprite != null && ((Ennemi) object).sprite != null)
+                {
+                    if (this.hitBox.intersect(((Ennemi) object).hitBox))
+                    {
+                        listeObjetEnMouvement.remove(this);
+                        listeObjetEnMouvement.remove(object);
+                        timerMouvement.cancel();
+                        timerMouvement.purge();
+                        ((Ennemi) object).timerMouvement.cancel();
+                        ((Ennemi) object).timerMouvement.purge();
+                        ((Ennemi) object).anim.stop();
+
+
+                        ((ViewGroup) sprite.getParent()).removeView(((Ennemi) object).sprite);
+                        ((ViewGroup) sprite.getParent()).removeView(this.sprite);
+                       // ViewGroup globalLayout = (ViewGroup) ((Ennemi) object).activity.findViewById(R.id.globalLayout);
+                       // globalLayout.removeView(((Ennemi) object).sprite);
+
+                        this.sprite = null;
+                        this.hitBox = null;
+                        ((Ennemi) object).sprite = null;
+                        ((Ennemi) object).hitBox = null;
+                        object = null;
+                        Joueur.setScore(1);
+                    }
                 }
             }
-        */
+        }
+        liste.clear();
     }
 
-    public ArrayList<ObjetEnMouvement> listeObjetsEnMouvement() {
-        RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
+    public ArrayList<ObjetEnMouvement> getListeObjetsEnMouvement()
+    {
+        ArrayList<ObjetEnMouvement> liste = (ArrayList<ObjetEnMouvement>) listeObjetEnMouvement.clone();
+        liste.remove(this);
+        /*
+        RelativeLayout globalLayout = (RelativeLayout) activity.findViewById(R.id.globalLayout);
+        //RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
 
         ArrayList<ObjetEnMouvement> liste = new ArrayList<>();
 
         int childCount = globalLayout.getChildCount();
-        for (int i = 0; i < childCount; i++) {
+        Log.w("nico", "nombre d'objet dans ma liste : " + childCount);
+        for (int i = 0; i < childCount; i++)
+        {
             Object object = globalLayout.getChildAt(i);
+            if (object instanceof ObjetEnMouvement)
+                liste.add((ObjetEnMouvement) object);
         }
+        */
         return liste;
     }
 
