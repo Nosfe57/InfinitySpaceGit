@@ -2,6 +2,7 @@ package david.nico.shoot.infinityspace;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.Log;
@@ -42,6 +43,7 @@ public abstract class ObjetEnMouvement
     {
         listeObjetEnMouvement.add(this);
         vitesse = -1;
+        Log.w("david", "objet créé " + this.getClass().toString());
     }
 
 
@@ -111,9 +113,6 @@ public abstract class ObjetEnMouvement
                 {
                     if(this.hitBox.intersect(((Joueur) object).hitBox))
                     {
-                        //Code perte PV joueur
-                        //Verifier si mort : GameOver
-
                         listeObjetEnMouvement.remove(this);
                         timerMouvement.cancel();
                         timerMouvement.purge();
@@ -121,6 +120,7 @@ public abstract class ObjetEnMouvement
                         this.sprite = null;
                         this.hitBox = null;
                         object = null;
+                        finPartie();
                     }
                 }
             }
@@ -229,8 +229,8 @@ public abstract class ObjetEnMouvement
                 {
                     if (this.hitBox.intersect(((Ennemi) object).hitBox))
                     {
-                        Log.w("nico", "Collision ENNEMI !");
-                        Log.w("nico", ((Ennemi) object).hitBox.toString());
+                        ((Ennemi) object).hitBox = null;
+                        finPartie();
                     }
                 }
             }
@@ -240,13 +240,31 @@ public abstract class ObjetEnMouvement
                 {
                     if (this.hitBox.intersect(((Asteroide) object).hitBox))
                     {
-                        Log.w("nico", "Collision ASTEROIDE !");
-                        Log.w("nico", ((Asteroide) object).hitBox.toString());
+                        ((Asteroide) object).hitBox = null;
+                        finPartie();
                     }
                 }
             }
         }
         liste.clear();
+    }
+
+    public void finPartie()
+    {
+        Joueur.pointsDeVie--;
+        if (Joueur.pointsDeVie == 0) {
+            activity.finish();
+            timerMouvement = null;
+
+            Intent intent2 = new Intent();
+            intent2.setClassName("david.nico.shoot.infinityspace", "david.nico.shoot.infinityspace.GameOver");
+            intent2.putExtra("score", GameActivity.scoreActuel);
+
+
+            activity.startActivity(intent2);
+
+            GameActivity.scoreActuel = 0;
+        }
     }
 
     public ArrayList<ObjetEnMouvement> getListeObjetsEnMouvement()

@@ -16,7 +16,6 @@ import java.util.TimerTask;
  */
 public abstract class Vaisseau extends ObjetEnMouvement
 {
-
     protected Context context;
     protected int vitesseTir;
     Timer tire;
@@ -29,7 +28,7 @@ public abstract class Vaisseau extends ObjetEnMouvement
         sprite = null;
     }
 
-    protected Vaisseau(ImageView vaisseauSprite, int vaisseauPV, Context vaisseauContext)
+    protected Vaisseau(ImageView vaisseauSprite, Context vaisseauContext)
     {
         super();
         sprite = vaisseauSprite;
@@ -86,8 +85,20 @@ public abstract class Vaisseau extends ObjetEnMouvement
             tire.schedule(taskTirJoueur, 500, cadenceDeTir);
     }
 
+    public void arreterTirs()
+    {
+        if (tire != null)
+        {
+            tire.cancel();
+            tire.purge();
+            tire = null;
+        }
+    }
+
     public void finalize()
     {
+
+
         Log.w("david", "objet détruit");
     }
 }

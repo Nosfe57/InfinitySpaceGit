@@ -51,16 +51,14 @@ public class Ennemi extends Vaisseau
         //ImageView test = new ImageView();
     }
 
-    public Ennemi(ImageView ennemiSprite, int ennemiPV, int ennemiScore, Context ennemiContext, Point ennemiTailleEcran)
+    public Ennemi(ImageView ennemiSprite, int ennemiScore, Context ennemiContext, Point ennemiTailleEcran)
     {
-        super(ennemiSprite, ennemiPV, ennemiContext);
+        super(ennemiSprite, ennemiContext);
         pointsScore = ennemiScore;
         activity = (Activity)ennemiContext;
         tailleEcran = ennemiTailleEcran;
         apparaitre();
         bouger();
-
-
     }
 
     public void apparaitre()

@@ -38,8 +38,12 @@ public class GameActivity extends AppCompatActivity {
     Sensor sensor;
     Point tailleEcran;
     Joueur joueur;
-    Timer timer;
-    Timer timerAsteroide;
+    static Timer timerEnnemi;
+    static Timer timerAsteroide;
+    static Timer timerNettoyage;
+    TimerTask vidage;
+    TimerTask taskEnnemi;
+    TimerTask taskAsteroide;
     RelativeLayout globalLayout;
     static TextView affichageScoreActuel;
     static int scoreActuel = 0;
@@ -62,50 +66,10 @@ public class GameActivity extends AppCompatActivity {
         tailleEcran = new Point();
         display.getSize(tailleEcran);
 
-        joueur = new Joueur(null, 3, 2, this, tailleEcran);
+        Joueur.pointsDeVie = 1;
+        joueur = new Joueur(null, 2, this, tailleEcran);
         joueur.tirer(tailleEcran);
 
-        final Context context = this;
-
-        //Apparation des enemis
-        TimerTask essai = new TimerTask() {
-            @Override
-            public void run() {
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Ennemi ennemi = new Ennemi(null, 1, 1, context, tailleEcran);
-                        ennemi.tirer(tailleEcran);
-                    }
-                });
-            }
-        };
-        timer = new Timer();
-        timer.schedule(essai, 500, 2000);
-
-        //Apparition des astéroides
-        TimerTask taskAsteroide = new TimerTask() {
-            @Override
-            public void run() {
-                ((Activity)context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Asteroide asteroide = new Asteroide(context, tailleEcran);
-                    }
-                });
-            }
-        };
-        timerAsteroide = new Timer();
-        timerAsteroide.schedule(taskAsteroide, 1000, 4000);
-
-        TimerTask vidage = new TimerTask() {
-            @Override
-            public void run() {
-                deleteObjects();
-            }
-        };
-        Timer nettoyage = new Timer();
-        nettoyage.schedule(vidage, 0, 2000);
         affichageScoreActuel.setText(getString(R.string.scoreBarre, String.valueOf(0)));
     }
 
@@ -136,11 +100,93 @@ public class GameActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         sensorManager.registerListener(gyroListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        final Context context = this;
+
+        //Apparation des enemis
+        taskEnnemi = new TimerTask() {
+            @Override
+            public void run() {
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Ennemi ennemi = new Ennemi(null, 1, context, tailleEcran);
+                        ennemi.tirer(tailleEcran);
+                    }
+                });
+            }
+        };
+        timerEnnemi = new Timer();
+        timerEnnemi.schedule(taskEnnemi, 500, 2000);
+
+        //Apparition des astéroides
+        taskAsteroide = new TimerTask() {
+            @Override
+            public void run() {
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Asteroide asteroide = new Asteroide(context, tailleEcran);
+                    }
+                });
+            }
+        };
+        timerAsteroide = new Timer();
+        timerAsteroide.schedule(taskAsteroide, 1000, 4000);
+
+        vidage = new TimerTask() {
+            @Override
+            public void run() {
+                deleteObjects();
+            }
+        };
+        timerNettoyage = new Timer();
+        timerNettoyage.schedule(vidage, 0, 2000);
+    }
+
+    public void arreterTimer()
+    {
+        if (joueur != null)
+        {
+            joueur.arreterTirs();
+            joueur = null;
+        }
+
+        if (timerEnnemi != null)
+        {
+            timerEnnemi.cancel();
+            timerEnnemi.purge();
+            timerEnnemi = null;
+        }
+
+        if(timerAsteroide != null)
+        {
+            timerAsteroide.cancel();
+            timerAsteroide.purge();
+            timerAsteroide = null;
+        }
+
+        if(timerNettoyage != null)
+        {
+            timerNettoyage.cancel();
+            timerNettoyage.purge();
+            timerNettoyage = null;
+        }
+
+        vidage.cancel();
+        taskAsteroide.cancel();
+        taskEnnemi.cancel();
+    }
+
+    public void onPause()
+    {
+        super.onPause();
+        arreterTimer();
+
     }
 
     public void onStop() {
         super.onStop();
-        sensorManager.unregisterListener(gyroListener);
+        arreterTimer();
     }
 
     public SensorEventListener gyroListener = new SensorEventListener() {
@@ -151,7 +197,10 @@ public class GameActivity extends AppCompatActivity {
             //float x = event.values[0];
             float y = event.values[1];
 
-            joueur.bouger(y, tailleEcran.y);
+            if (joueur != null)
+            {
+                joueur.bouger(y, tailleEcran.y);
+            }
         }
     };
 }

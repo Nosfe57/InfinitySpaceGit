@@ -19,7 +19,7 @@ import org.w3c.dom.Text;
 public class Joueur extends Vaisseau
 {
     private int nbBombes;
-    private static int pointsDeVie;
+    public static int pointsDeVie;
 
     //region Get_Set
     public int getNbBombes()
@@ -38,15 +38,16 @@ public class Joueur extends Vaisseau
     {
         super();
         nbBombes = 2;
-        pointsDeVie = 3;
+        pointsDeVie = 1;
     }
 
-    public Joueur(ImageView joueurSprite, int joueurPV, int joueurNbBombes, Context playerContext, Point joueurTailleEcran)
+    public Joueur(ImageView joueurSprite, int joueurNbBombes, Context playerContext, Point joueurTailleEcran)
     {
-        super(joueurSprite, joueurPV, playerContext);
+        super(joueurSprite, playerContext);
         nbBombes = joueurNbBombes;
         tailleEcran = joueurTailleEcran;
         apparaitre();
+        pointsDeVie = 1;
     }
 
     public void utiliserBombe()
@@ -56,22 +57,6 @@ public class Joueur extends Vaisseau
 
         }
     }
-
-    public static void perdrePV(int degatsSubits) {
-        pointsDeVie -= degatsSubits;
-
-        //On vérifie si le vaisseau est mort
-        if (pointsDeVie <= 0)
-        {
-
-        }
-        else
-        {
-            //Code pour faire clignoter.
-        }
-
-    }
-
 
     public void apparaitre()
     {
