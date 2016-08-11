@@ -35,7 +35,7 @@ public class Joueur extends Vaisseau
     public static void setScore(int modifScore)
     {
         scoreActuel += modifScore;
-        
+
     }
     //endregion
 
