@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnNewGame;
     Button viewScores;
+    Button options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
 
         btnNewGame = (Button)findViewById(R.id.btn_new_game);
         btnNewGame.setOnClickListener(mainClick);
+
+        options = (Button)findViewById(R.id.btn_options);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         viewScores = (Button)findViewById(R.id.btn_viewScores);
         viewScores.setOnClickListener(scoresClick);
