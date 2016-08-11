@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/infoBarre"
-        android:background="#e01b1b">
+        android:background="#000000">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -38,7 +38,8 @@
             android:text="New Text"
             android:id="@+id/tv_scoreActuel"
             android:textColor="#FFFFFF"
-            android:gravity="right" />
+            android:gravity="center_vertical|right"
+            android:paddingRight="20dp" />
 
     </LinearLayout>
 

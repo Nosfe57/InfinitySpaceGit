@@ -30,7 +30,7 @@ public class Joueur extends Vaisseau
     {
         nbBombes += modifNbBombes;
     }
-    
+
 
     //endregion
 
