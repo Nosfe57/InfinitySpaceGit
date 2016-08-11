@@ -26,7 +26,7 @@
 
     <string name="pref_title_orientation">Orientation</string>
 
-    <string name="pref_title_desc_orientation">Choix de l'orientation</string>
+    <string name="pref_title_desc_orientation">Choix de l\'orientation</string>
     <string-array name="pref_orientation_list_titles">
         <item>Horizontal</item>
         <item>Vertical</item>
@@ -38,7 +38,7 @@
 
     <string name="pref_title_difficulte">Diificulté</string>
 
-    <string name="pref_title_add_friends_to_messages">Choix de l'orientation</string>
+    <string name="pref_title_add_friends_to_messages">Choix de l\'orientation</string>
     <string-array name="pref_difficulte_list_titles">
         <item>Hello Kitty</item>
         <item>Normal</item>

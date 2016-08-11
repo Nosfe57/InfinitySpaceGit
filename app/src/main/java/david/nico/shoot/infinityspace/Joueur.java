@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by USER on 03/08/2016.
@@ -17,6 +18,7 @@ public class Joueur extends Vaisseau
 {
     private int nbBombes;
     private static int scoreActuel;
+    TextView affichageScoreActuel;
 
     //region Get_Set
     public int getNbBombes()
@@ -35,7 +37,6 @@ public class Joueur extends Vaisseau
     public static void setScore(int modifScore)
     {
         scoreActuel += modifScore;
-        
     }
     //endregion
 
@@ -85,6 +86,12 @@ public class Joueur extends Vaisseau
                 anim.start();
             }
         });
+    }
+
+    public void rafraichirScore()
+    {
+        affichageScoreActuel = (TextView)activity.findViewById(R.id.tv_scoreActuel);
+        affichageScoreActuel.setText(activity.getString(R.string.scoreBarre, String.valueOf(scoreActuel)));
     }
 
     public void bouger(float y, int tailleFenetre)
