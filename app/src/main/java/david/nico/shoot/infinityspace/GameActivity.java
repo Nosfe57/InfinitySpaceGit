@@ -36,12 +36,13 @@ public class GameActivity extends AppCompatActivity {
 
     SensorManager sensorManager;
     Sensor sensor;
-    ImageView spaceship;
     Point tailleEcran;
     Joueur joueur;
     Timer timer;
     Timer timerAsteroide;
     RelativeLayout globalLayout;
+    static TextView affichageScoreActuel;
+    static int scoreActuel = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         globalLayout = (RelativeLayout)findViewById(R.id.globalLayout);
+        affichageScoreActuel = (TextView)findViewById(R.id.tv_scoreActuel);
 
         //Variable senseur du gyroscope
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -104,6 +106,7 @@ public class GameActivity extends AppCompatActivity {
         };
         Timer nettoyage = new Timer();
         nettoyage.schedule(vidage, 0, 2000);
+        affichageScoreActuel.setText(getString(R.string.scoreBarre, String.valueOf(0)));
     }
 
     public void deleteObjects()
