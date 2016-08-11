@@ -30,7 +30,7 @@ public abstract class ObjetEnMouvement
     protected ImageView sprite;
     protected FrameLayout.LayoutParams layoutParams;
     protected Timer timerMouvement;
-     Activity activity;
+    Activity activity;
     protected Point tailleEcran;
     protected int vitesse; //Nombre négatif pour les ennemis et positif pour le joueur
     protected Rect hitBox;
@@ -170,7 +170,8 @@ public abstract class ObjetEnMouvement
                         ((Ennemi) object).sprite = null;
                         ((Ennemi) object).hitBox = null;
                         object = null;
-                        Joueur.setScore(1);
+                        GameActivity.scoreActuel++;
+                        GameActivity.affichageScoreActuel.setText(activity.getString(R.string.scoreBarre, String.valueOf(GameActivity.scoreActuel)));
                     }
                 }
             }

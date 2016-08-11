@@ -11,14 +11,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by USER on 03/08/2016.
  */
 public class Joueur extends Vaisseau
 {
     private int nbBombes;
-    private static int scoreActuel;
-    TextView affichageScoreActuel;
+    private static int pointsDeVie;
 
     //region Get_Set
     public int getNbBombes()
@@ -29,32 +30,22 @@ public class Joueur extends Vaisseau
     {
         nbBombes += modifNbBombes;
     }
+    
 
-    public int getScore()
-    {
-        return scoreActuel;
-    }
-    public static void setScore(int modifScore)
-    {
-        scoreActuel += modifScore;
-
-    }
     //endregion
 
     public Joueur()
     {
         super();
         nbBombes = 2;
-        scoreActuel = 0;
+        pointsDeVie = 3;
     }
 
     public Joueur(ImageView joueurSprite, int joueurPV, int joueurNbBombes, Context playerContext, Point joueurTailleEcran)
     {
         super(joueurSprite, joueurPV, playerContext);
         nbBombes = joueurNbBombes;
-        scoreActuel = 0;
         tailleEcran = joueurTailleEcran;
-
         apparaitre();
     }
 
@@ -62,9 +53,25 @@ public class Joueur extends Vaisseau
     {
         if (nbBombes > 0)
         {
-            //Code
+
         }
     }
+
+    public static void perdrePV(int degatsSubits) {
+        pointsDeVie -= degatsSubits;
+
+        //On vérifie si le vaisseau est mort
+        if (pointsDeVie <= 0)
+        {
+
+        }
+        else
+        {
+            //Code pour faire clignoter.
+        }
+
+    }
+
 
     public void apparaitre()
     {
@@ -87,12 +94,6 @@ public class Joueur extends Vaisseau
                 anim.start();
             }
         });
-    }
-
-    public void rafraichirScore()
-    {
-        affichageScoreActuel = (TextView)activity.findViewById(R.id.tv_scoreActuel);
-        affichageScoreActuel.setText(activity.getString(R.string.scoreBarre, String.valueOf(scoreActuel)));
     }
 
     public void bouger(float y, int tailleFenetre)

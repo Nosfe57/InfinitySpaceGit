@@ -16,7 +16,7 @@ import java.util.TimerTask;
  */
 public abstract class Vaisseau extends ObjetEnMouvement
 {
-    protected int pointsDeVie;
+
     protected Context context;
     protected int vitesseTir;
     Timer tire;
@@ -27,14 +27,12 @@ public abstract class Vaisseau extends ObjetEnMouvement
     {
         //Il faudra indiquer un sprite par défaut !
         sprite = null;
-        pointsDeVie = 1;
     }
 
     protected Vaisseau(ImageView vaisseauSprite, int vaisseauPV, Context vaisseauContext)
     {
         super();
         sprite = vaisseauSprite;
-        pointsDeVie = vaisseauPV;
         context = vaisseauContext;
         if (sprite != null) {
             sprite.post(new Runnable() {
@@ -46,17 +44,6 @@ public abstract class Vaisseau extends ObjetEnMouvement
         }
     }
 
-    protected void perdrePV(int degatsSubits) {
-        pointsDeVie -= degatsSubits;
-
-        //On vérifie si le vaisseau est mort
-        if (pointsDeVie <= 0)
-            detruire();
-        else {
-            //Code pour faire clignoter.
-        }
-
-    }
 
     protected void detruire() {
         //Code
