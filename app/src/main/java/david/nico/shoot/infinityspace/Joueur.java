@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by USER on 03/08/2016.
@@ -17,6 +18,7 @@ public class Joueur extends Vaisseau
 {
     private int nbBombes;
     private static int scoreActuel;
+    TextView affichageScoreActuel;
 
     //region Get_Set
     public int getNbBombes()
@@ -87,13 +89,19 @@ public class Joueur extends Vaisseau
         });
     }
 
+    public void rafraichirScore()
+    {
+        affichageScoreActuel = (TextView)activity.findViewById(R.id.tv_scoreActuel);
+        affichageScoreActuel.setText(activity.getString(R.string.scoreBarre, String.valueOf(scoreActuel)));
+    }
+
     public void bouger(float y, int tailleFenetre)
     {
         if (y != 0) {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(sprite.getWidth(), sprite.getHeight());
             params.topMargin = sprite.getTop() + (int) (y * -90.0f);
-            if(params.topMargin < 0)
-                params.topMargin = 0;
+            if(params.topMargin < dpToPx(30))
+                params.topMargin = dpToPx(30);
             if(params.topMargin > (tailleFenetre - sprite.getHeight()) )
                 params.topMargin = (tailleFenetre - sprite.getHeight());
             params.leftMargin = sprite.getLeft();
@@ -101,6 +109,9 @@ public class Joueur extends Vaisseau
             hitBox.offsetTo(params.leftMargin, params.topMargin);
 
         }
+
+        this.collisionJoueurEnemi();
+
         /*Log.w("nico", "after : " + sprite.getTop());
         if ( (int) y >0 || (int) y < 0) {
 

@@ -73,8 +73,15 @@ public abstract class ObjetEnMouvement
                                     if (((Missile) objet).typeVaisseau)
                                     {
                                         objet.collisionMissileJoueurEnemi();
+                                    } else {
+                                        objet.collisionMissileEnemiJoueur();
                                     }
                                 }
+                                if(objet instanceof Ennemi)
+                                {
+                                   objet.collisionEnemiAsteroide();
+                                }
+
                             }
                             else
                             {
@@ -93,6 +100,50 @@ public abstract class ObjetEnMouvement
         timerMouvement.schedule(task, 0, 10);
     }
 
+    public void collisionMissileEnemiJoueur()
+    {
+        ArrayList<ObjetEnMouvement> liste = getListeObjetsEnMouvement();
+        for (ObjetEnMouvement object : liste)
+        {
+            if(object instanceof Joueur)
+            {
+                if (this.hitBox != null && ((Joueur) object).hitBox != null && this.sprite != null && ((Joueur) object).sprite != null)
+                {
+                    if(this.hitBox.intersect(((Joueur) object).hitBox))
+                    {
+                        //Code perte PV joueur
+                        //Verifier si mort : GameOver
+
+                        listeObjetEnMouvement.remove(this);
+                        timerMouvement.cancel();
+                        timerMouvement.purge();
+                        ((ViewGroup) sprite.getParent()).removeView(this.sprite);
+                        this.sprite = null;
+                        this.hitBox = null;
+                        object = null;
+                    }
+                }
+            }
+            if(object instanceof Asteroide)
+            {
+                if (this.hitBox != null && ((Asteroide) object).hitBox != null && this.sprite != null && ((Asteroide) object).sprite != null)
+                {
+                    if (this.hitBox.intersect(((Asteroide) object).hitBox))
+                    {
+                        listeObjetEnMouvement.remove(this);
+                        timerMouvement.cancel();
+                        timerMouvement.purge();
+                        ((ViewGroup) sprite.getParent()).removeView(this.sprite);
+                        this.sprite = null;
+                        this.hitBox = null;
+                        object = null;
+                    }
+                }
+            }
+        }
+
+        liste.clear();
+    }
 
     public void collisionMissileJoueurEnemi()
     {
@@ -100,7 +151,7 @@ public abstract class ObjetEnMouvement
         for (ObjetEnMouvement object : liste)
         {
             if (object instanceof Ennemi)
-                {
+            {
                 if (this.hitBox != null && ((Ennemi) object).hitBox != null && this.sprite != null && ((Ennemi) object).sprite != null)
                 {
                     if (this.hitBox.intersect(((Ennemi) object).hitBox))
@@ -112,19 +163,84 @@ public abstract class ObjetEnMouvement
                         ((Ennemi) object).timerMouvement.cancel();
                         ((Ennemi) object).timerMouvement.purge();
                         ((Ennemi) object).anim.stop();
-
-
                         ((ViewGroup) sprite.getParent()).removeView(((Ennemi) object).sprite);
                         ((ViewGroup) sprite.getParent()).removeView(this.sprite);
-                       // ViewGroup globalLayout = (ViewGroup) ((Ennemi) object).activity.findViewById(R.id.globalLayout);
-                       // globalLayout.removeView(((Ennemi) object).sprite);
-
                         this.sprite = null;
                         this.hitBox = null;
                         ((Ennemi) object).sprite = null;
                         ((Ennemi) object).hitBox = null;
                         object = null;
                         Joueur.setScore(1);
+                    }
+                }
+            }
+            if(object instanceof Asteroide)
+            {
+                if (this.hitBox != null && ((Asteroide) object).hitBox != null && this.sprite != null && ((Asteroide) object).sprite != null)
+                {
+                    if (this.hitBox.intersect(((Asteroide) object).hitBox))
+                    {
+                        listeObjetEnMouvement.remove(this);
+                        timerMouvement.cancel();
+                        timerMouvement.purge();
+                        ((ViewGroup) sprite.getParent()).removeView(this.sprite);
+                        this.sprite = null;
+                        this.hitBox = null;
+                        object = null;
+                    }
+
+                }
+            }
+        }
+        liste.clear();
+    }
+    public void collisionEnemiAsteroide()
+    {
+        ArrayList<ObjetEnMouvement> liste = getListeObjetsEnMouvement();
+        for (ObjetEnMouvement object : liste)
+        {
+            if(object instanceof Asteroide)
+            {
+                if (this.hitBox != null && ((Asteroide) object).hitBox != null && this.sprite != null && ((Asteroide) object).sprite != null)
+                {
+                    if (this.hitBox.intersect(((Asteroide) object).hitBox)) {
+                        listeObjetEnMouvement.remove(this);
+                        timerMouvement.cancel();
+                        timerMouvement.purge();
+                        ((ViewGroup) sprite.getParent()).removeView(this.sprite);
+                        this.sprite = null;
+                        this.hitBox = null;
+                        object = null;
+                    }
+                }
+            }
+        }
+        liste.clear();
+    }
+    public void collisionJoueurEnemi()
+    {
+        ArrayList<ObjetEnMouvement> liste = getListeObjetsEnMouvement();
+        for (ObjetEnMouvement object : liste)
+        {
+            if(object instanceof Ennemi)
+            {
+                if (this.hitBox != null && ((Ennemi) object).hitBox != null && this.sprite != null && ((Ennemi) object).sprite != null)
+                {
+                    if (this.hitBox.intersect(((Ennemi) object).hitBox))
+                    {
+                        Log.w("nico", "Collision ENNEMI !");
+                        Log.w("nico", ((Ennemi) object).hitBox.toString());
+                    }
+                }
+            }
+            if(object instanceof Asteroide)
+            {
+                if (this.hitBox != null && ((Asteroide) object).hitBox != null && this.sprite != null && ((Asteroide) object).sprite != null)
+                {
+                    if (this.hitBox.intersect(((Asteroide) object).hitBox))
+                    {
+                        Log.w("nico", "Collision ASTEROIDE !");
+                        Log.w("nico", ((Asteroide) object).hitBox.toString());
                     }
                 }
             }
@@ -136,32 +252,10 @@ public abstract class ObjetEnMouvement
     {
         ArrayList<ObjetEnMouvement> liste = (ArrayList<ObjetEnMouvement>) listeObjetEnMouvement.clone();
         liste.remove(this);
-        /*
-        RelativeLayout globalLayout = (RelativeLayout) activity.findViewById(R.id.globalLayout);
-        //RelativeLayout globalLayout = (RelativeLayout) Resources.getSystem().getLayout(R.layout.activity_game);
 
-        ArrayList<ObjetEnMouvement> liste = new ArrayList<>();
-
-        int childCount = globalLayout.getChildCount();
-        Log.w("nico", "nombre d'objet dans ma liste : " + childCount);
-        for (int i = 0; i < childCount; i++)
-        {
-            Object object = globalLayout.getChildAt(i);
-            if (object instanceof ObjetEnMouvement)
-                liste.add((ObjetEnMouvement) object);
-        }
-        */
         return liste;
     }
 
-    public boolean testColision()
-    {
-
-
-        return false;
-
-
-    }
 
     public static int dpToPx(int dp)
     {
@@ -171,13 +265,6 @@ public abstract class ObjetEnMouvement
     public static int pxToDp(int px)
     {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
-    }
-
-    public boolean verifierCollision(Object obj)
-    {
-
-
-        return false;
     }
 
     public void finalize()

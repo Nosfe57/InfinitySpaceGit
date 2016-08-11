@@ -85,10 +85,6 @@ public class Missile extends ObjetEnMouvement
 
     public void detruire()
     {
-<<<<<<< HEAD
         //Code
-=======
->>>>>>> origin/master
-
     }
 }

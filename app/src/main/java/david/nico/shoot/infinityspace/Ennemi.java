@@ -71,7 +71,7 @@ public class Ennemi extends Vaisseau
         layoutParams = new FrameLayout.LayoutParams(dpToPx(40), dpToPx(40));
         layoutParams.leftMargin = tailleEcran.x;
         Random rnd = new Random();
-        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - dpToPx(40));
+        layoutParams.topMargin = rnd.nextInt(tailleEcran.y - dpToPx(70)) + dpToPx(30);
 
         activity = (Activity)context;
         activity.addContentView(sprite, layoutParams);

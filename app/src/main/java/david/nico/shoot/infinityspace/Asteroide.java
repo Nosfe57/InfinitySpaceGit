@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -58,7 +59,10 @@ public class Asteroide extends ObjetEnMouvement
         //Paramètres de l'imageView
         layoutParams = new FrameLayout.LayoutParams(dpToPx(40), dpToPx(40));
         Random positionRandom = new Random();
-        int y = positionRandom.nextInt(tailleEcran.y - dpToPx(40));
+
+        //30dp : hauteur de la barre des scores,
+        //70dp = 30dp de la barre des scores et 40 dp hauteur des astéroides et des vaisseaux enemi
+        int y = positionRandom.nextInt(tailleEcran.y - dpToPx(70)) + dpToPx(30);
         layoutParams.topMargin = y;
         layoutParams.leftMargin = tailleEcran.x;
 
